@@ -189,6 +189,7 @@ export const STOPS: readonly Stop[] = [
       {
         id: "impreza-rewamp",
         name: "Impreza Rewamp",
+        preview: "/previews/impreza-rewamp.jpg",
         status: "in-development",
         stack: "Next.js",
         summary: "A scroll-driven brand intro with a skip button and a reduced-motion toggle.",
@@ -214,6 +215,7 @@ export const STOPS: readonly Stop[] = [
       {
         id: "wedding-invitation",
         name: "Wedding invitation",
+        preview: "/previews/wedding-invitation.jpg",
         status: "in-development",
         stack: "Next.js",
         summary:
@@ -222,6 +224,7 @@ export const STOPS: readonly Stop[] = [
       {
         id: "eioz",
         name: "EIOZ",
+        preview: "/previews/eioz.jpg",
         status: "in-development",
         summary:
           "A lighting brand's “Journey of Light” process timeline, client and partner sections, and a pause-animation control.",
