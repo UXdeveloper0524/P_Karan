@@ -20,14 +20,14 @@ type Phase = "loading" | "ready" | "failed";
 
 export function StoryExperience() {
   const trackRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
+  const probeRef = useRef<HTMLDivElement>(null);
   const [store] = useState(createProgressStore);
   const { reduced, toggle: toggleMotion } = useMotionPreference();
   const [phase, setPhase] = useState<Phase>("loading");
   const [loadProgress, setLoadProgress] = useState(0);
   const [introDone, setIntroDone] = useState(false);
 
-  useScrollProgress(trackRef, stageRef, store, reduced);
+  useScrollProgress(trackRef, probeRef, store, reduced);
 
   const handleIntroDone = useCallback(() => {
     // Let the fade play before removing the loader from the page.
@@ -43,8 +43,11 @@ export function StoryExperience() {
     <ProgressStoreProvider store={store}>
       {/* The tall track gives the page its scroll length; the stage stays on screen. */}
       <div ref={trackRef} className="relative" style={{ height: `${TRACK_HEIGHT_VH}vh` }}>
-        {/* svh keeps the stage the same height while the iOS toolbar moves; the canvas bleeds to lvh so no strip shows. */}
-        <div ref={stageRef} className="sticky top-0 h-svh w-full overflow-x-clip bg-ink">
+        {/* Measures the largest viewport, so scroll progress stays steady while the iOS toolbar moves. */}
+        <div ref={probeRef} aria-hidden="true" className="pointer-events-none invisible absolute top-0 h-lvh w-0" />
+        {/* The stage follows the dynamic viewport (dvh), so text and HUD sit in the visible area as the
+            toolbar collapses; the canvas stays at lvh so it never resizes, and so never flickers. */}
+        <div className="sticky top-0 h-dvh w-full overflow-x-clip bg-ink">
           <WorldCanvas
             reducedMotion={reduced}
             onProgress={setLoadProgress}

@@ -13,7 +13,7 @@ const MAX_DT = 0.1;
  */
 export function useScrollProgress(
   trackRef: RefObject<HTMLElement | null>,
-  stageRef: RefObject<HTMLElement | null>,
+  probeRef: RefObject<HTMLElement | null>,
   store: ProgressStore,
   reduced: boolean,
 ): void {
@@ -28,10 +28,12 @@ export function useScrollProgress(
       const dt = Math.min(MAX_DT, (now - last) / 1000);
       last = now;
 
-      const stage = stageRef.current;
-      if (track && stage) {
-        // The stage has a fixed height, unlike window.innerHeight, which iOS changes as its toolbar slides.
-        const scrollable = track.offsetHeight - stage.offsetHeight;
+      const probe = probeRef.current;
+      if (track && probe) {
+        // The probe is as tall as the largest viewport (100lvh), which never changes. window.innerHeight
+        // does change as the iOS toolbar slides, and would make progress jitter.
+        const viewport = probe.offsetHeight > 100 ? probe.offsetHeight : window.innerHeight;
+        const scrollable = track.offsetHeight - viewport;
         const raw =
           scrollable > 0 ? clamp(-track.getBoundingClientRect().top / scrollable) : 0;
         store.tick(raw, now, dt, reducedRef.current);
@@ -41,5 +43,5 @@ export function useScrollProgress(
 
     frame = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(frame);
-  }, [trackRef, stageRef, store, reducedRef]);
+  }, [trackRef, probeRef, store, reducedRef]);
 }
