@@ -75,5 +75,5 @@ export default function WorldCanvas({
     worldRef.current?.update(state, time, dt);
   });
 
-  return <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 block h-full w-full" />;
+  return <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-x-0 top-0 block h-lvh w-full" />;
 }

@@ -21,13 +21,13 @@ export function Hud() {
 
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 z-20">
-      <div className="flex items-end justify-between gap-4 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] font-mono text-[11px] uppercase tracking-[0.18em] text-muted tabular-nums md:px-16">
+      <div className="flex items-end justify-between gap-4 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-[11px] uppercase tracking-[0.24em] text-muted tabular-nums md:px-16">
         <span ref={percentRef}>0%</span>
         <span>
           {pad(stopIndex + 1)} / {pad(STOPS.length)}
-          {stop ? ` · ${stop.eyebrow}` : ""}
+          {stop ? ` · ${stop.short}` : ""}
         </span>
-        <span className="hidden sm:inline">Scroll to move</span>
+        <span className="hidden sm:inline">Scroll to drive</span>
       </div>
       <div className="h-0.5 bg-paper/10">
         <div
